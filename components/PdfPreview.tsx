@@ -1,21 +1,20 @@
 interface PdfPreviewProps {
-  url: string | null;
+  htmlContent: string | null;
 }
 
-export default function PdfPreview({ url }: PdfPreviewProps) {
-  if (!url) {
+export default function PdfPreview({ htmlContent }: PdfPreviewProps) {
+  if (!htmlContent) {
     return (
-      <div className="h-[600px] flex items-center justify-center text-gray-400">
-        PDF preview will appear here
+      <div className="h-[70vh] flex items-center justify-center text-gray-400 text-sm">
+        Compiled output will appear here
       </div>
     );
   }
 
   return (
-    <iframe
-      src={url}
-      className="w-full h-[600px]"
-      title="PDF Preview"
+    <div 
+      className="h-[70vh] overflow-auto p-6"
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   );
 }
