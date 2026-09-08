@@ -1,7 +1,7 @@
 // Simple LaTeX to HTML converter (no external dependencies)
 export function compileTexToHtml(texCode: string): string {
   try {
-    let html = texCode;
+    let html: string = texCode;
     
     // Remove document structure
     html = html.replace(/\\documentclass.*?$/m, '');
@@ -24,16 +24,16 @@ export function compileTexToHtml(texCode: string): string {
     html = html.replace(/\\small\s+(.*?)$/gm, '<small>$1</small>');
     
     // Convert itemize environments
-    html = html.replace(/\\begin\{itemize\}([\s\S]*?)\\end\{itemize\}/g, function(match, content) {
-      const items = content.split('\\item').filter(item => item.trim());
-      const listItems = items.map(item => `<li>${item.trim()}</li>`).join('');
+    html = html.replace(/\\begin\{itemize\}([\s\S]*?)\\end\{itemize\}/g, function(match: string, content: string): string {
+      const items: string[] = content.split('\\item').filter((item: string): boolean => item.trim() !== '');
+      const listItems: string = items.map((item: string): string => `<li>${item.trim()}</li>`).join('');
       return `<ul>${listItems}</ul>`;
     });
     
     // Convert enumerate environments
-    html = html.replace(/\\begin\{enumerate\}([\s\S]*?)\\end\{enumerate\}/g, function(match, content) {
-      const items = content.split('\\item').filter(item => item.trim());
-      const listItems = items.map(item => `<li>${item.trim()}</li>`).join('');
+    html = html.replace(/\\begin\{enumerate\}([\s\S]*?)\\end\{enumerate\}/g, function(match: string, content: string): string {
+      const items: string[] = content.split('\\item').filter((item: string): boolean => item.trim() !== '');
+      const listItems: string = items.map((item: string): string => `<li>${item.trim()}</li>`).join('');
       return `<ol>${listItems}</ol>`;
     });
     
