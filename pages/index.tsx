@@ -3,10 +3,9 @@ import TexEditor from '../components/TexEditor';
 import PdfPreview from '../components/PdfPreview';
 import Header from '../components/Header';
 import { compileTexToHtml } from '../lib/compiler';
-import { DEFAULT_TEMPLATE } from '../lib/templates';
 
 export default function Home() {
-  const [texCode, setTexCode] = useState(DEFAULT_TEMPLATE);
+  const [texCode, setTexCode] = useState('');
   const [htmlOutput, setHtmlOutput] = useState<string | null>(null);
   const [isCompiling, setIsCompiling] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,22 +13,23 @@ export default function Home() {
   const [isAutoCompile, setIsAutoCompile] = useState(true);
 
   const handleCompile = useCallback(async () => {
+    if (!texCode.trim()) return;
+    
     setIsCompiling(true);
     setError(null);
 
     try {
-      // Small delay to show loading state
-      await new Promise(resolve => setTimeout(resolve, 300));
-      const html = compileTexToHtml(texCode);
+      const html = await compileTexToHtml(texCode);
       setHtmlOutput(html);
     } catch (err) {
-      setError('Failed to compile LaTeX. Check your code for errors.');
+      setError('Failed to parse LaTeX. Please check your code.');
+      console.error(err);
     } finally {
       setIsCompiling(false);
     }
   }, [texCode]);
 
-  // Auto-compile on code change with debounce
+  // Auto-compile with debounce
   useEffect(() => {
     if (!isAutoCompile) return;
     
@@ -56,21 +56,17 @@ export default function Home() {
               font-family: 'Times New Roman', serif; 
               padding: 40px; 
               line-height: 1.6;
-              color: #1a1a1a;
+              color: #333;
               max-width: 800px;
               margin: 0 auto;
             }
-            h1.name { font-size: 24px; text-align: center; margin-bottom: 8px; }
-            h2.section-title { 
-              font-size: 18px; 
-              border-bottom: 2px solid #1a1a1a; 
-              margin-top: 24px; 
-              margin-bottom: 12px; 
-              padding-bottom: 4px;
-            }
-            ul, ol { margin-left: 20px; margin-bottom: 12px; }
-            li { margin-bottom: 4px; }
-            .center { text-align: center; }
+            .resume-name { font-size: 30px; font-weight: bold; color: #123B63; text-align: center; }
+            .resume-title { font-size: 16px; color: #123B63; text-align: center; margin: 8px 0; }
+            .contact-info { font-size: 12px; text-align: center; margin-bottom: 20px; }
+            .section-title { font-size: 16px; font-weight: bold; color: #123B63; border-bottom: 2px solid #123B63; margin-top: 20px; padding-bottom: 4px; }
+            .section-content { font-size: 13px; line-height: 1.6; }
+            ul { margin-left: 20px; }
+            .highlight { background-color: #EAF2F8; padding: 10px; text-align: center; }
           </style>
         </head>
         <body>${htmlOutput}</body>
@@ -78,12 +74,6 @@ export default function Home() {
     `);
     printWindow.document.close();
     
-    // Wait for content to load then print
-    printWindow.onload = function() {
-      printWindow.print();
-    };
-    
-    // Fallback for browsers that don't trigger onload
     setTimeout(() => {
       printWindow.print();
     }, 500);
@@ -107,12 +97,12 @@ export default function Home() {
           <div className="border-b bg-gray-50 px-4 py-3 flex items-center justify-between">
             <div>
               <h2 className="font-semibold text-gray-800">LaTeX Editor</h2>
-              <p className="text-xs text-gray-500">Write your resume in LaTeX</p>
+              <p className="text-xs text-gray-500">Paste your LaTeX resume</p>
             </div>
             {isCompiling && (
               <div className="flex items-center gap-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                <span className="text-xs text-gray-600">Compiling...</span>
+                <span className="text-xs text-gray-600">Processing...</span>
               </div>
             )}
           </div>
@@ -122,20 +112,14 @@ export default function Home() {
         <section className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
           <div className="border-b bg-gray-50 px-4 py-3">
             <h2 className="font-semibold text-gray-800">Live Preview</h2>
-            <p className="text-xs text-gray-500">Updates automatically</p>
+            <p className="text-xs text-gray-500">
+              {isAutoCompile ? 'Updates automatically' : 'Click compile to update'}
+            </p>
           </div>
           {error ? (
             <div className="p-6">
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <div className="flex items-start">
-                  <svg className="h-5 w-5 text-red-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-red-800">Compilation Error</h3>
-                    <p className="mt-1 text-sm text-red-700">{error}</p>
-                  </div>
-                </div>
+                <p className="text-sm text-red-700">{error}</p>
               </div>
             </div>
           ) : (
