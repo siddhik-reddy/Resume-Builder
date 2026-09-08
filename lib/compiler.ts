@@ -1,21 +1,32 @@
-import swiftlatex from '@swiftlatex/webassembly';
+import { latex } from 'latex.js';
 
-let engineInstance: any = null;
-
-async function getEngine() {
-  if (!engineInstance) {
-    engineInstance = await swiftlatex.load();
+export async function compileTexToHtml(texCode: string): Promise<string> {
+  try {
+    const html = latex.toHTML(texCode);
+    return html;
+  } catch (error) {
+    console.error('LaTeX compilation error:', error);
+    throw new Error('Failed to compile LaTeX');
   }
-  return engineInstance;
 }
 
-export async function compileTex(texCode: string) {
-  const engine = await getEngine();
-  const result = engine.compileLaTeX(texCode);
-  
-  return {
-    pdf: result.pdf,
-    log: result.log,
-    status: result.status
-  };
+export function generatePdfFromHtml(htmlContent: string): void {
+  // Create a new window and print to PDF
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) return;
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Resume</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; }
+        </style>
+      </head>
+      <body>${htmlContent}</body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.print();
 }
