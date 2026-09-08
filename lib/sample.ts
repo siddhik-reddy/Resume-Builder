@@ -1,33 +1,65 @@
-export const SAMPLE_RESUME = `\\documentclass{article}
-\\begin{document}
-\\begin{center}
-\\Large \\textbf{Jordan Rivera}\\\\
-\\small jordan.rivera@email.com \\quad 555-014-2231 \\quad Hyderabad, India
+export const SAMPLE_RESUME = `\\begin{center}
+\\Large \\textbf{SIDDHIK REDDY ERAMMA}
+\\small IT SUPPORT | CYBERSECURITY | SOC | NETWORKING
+\\small siddhikreddy440@gmail.com | 8897350151
+\\small LinkedIn: linkedin.com/in/siddhik-reddy | GitHub: github.com/siddhik-reddy
+\\small Portfolio: siddhikreddy.vercel.app
 \\end{center}
 
-\\section{Experience}
-\\textbf{Senior Frontend Engineer}, Northgate Labs \\\\
-\\small 2022 -- Present
+\\section{Professional Profile}
+Entry-level IT professional focused on building a career in \\textbf{IT Support, Cybersecurity, SOC Operations, and Networking}. Strong foundation in technical troubleshooting, networking concepts, cybersecurity fundamentals, and IT operations, with a practical mindset toward learning new technologies and solving technical problems. Seeking an opportunity to apply my knowledge in a professional environment while developing hands-on industry experience.
+
+\\section{Career Target}
+\\begin{center}
+\\textbf{IT Support Engineer | Technical Support | SOC Analyst | Cybersecurity Analyst | Network Support}
+\\end{center}
+
+\\section{Core Strengths}
+\\textbf{Technical Skills}
 \\begin{itemize}
-\\item Led the redesign of the internal design system used by 12 product teams
-\\item Cut initial page load time by \\textbf{40\\%} through code-splitting and lazy loading
-\\item Mentored two junior engineers through their first full feature launches
+\\item IT Support \\& Troubleshooting
+\\item Networking Fundamentals
+\\item Cybersecurity Fundamentals
+\\item SOC Operations
+\\item Microsoft 365
 \\end{itemize}
 
-\\textbf{Frontend Developer}, Coastline Software \\\\
-\\small 2019 -- 2022
+\\textbf{Professional Skills}
 \\begin{itemize}
-\\item Built and shipped the customer-facing billing dashboard from scratch
-\\item Migrated legacy jQuery views to a component-based architecture
+\\item Problem Solving
+\\item Analytical Thinking
+\\item Technical Communication
+\\item Fast Learning
+\\item Attention to Detail
 \\end{itemize}
 
-\\section{Education}
-\\textbf{B.S. Computer Science}, Riverside State University \\\\
-\\small 2015 -- 2019
-
-\\section{Skills}
+\\section{Current Technical Development}
+\\textbf{Networking}
 \\begin{itemize}
-\\item JavaScript, TypeScript, React, CSS
-\\item REST APIs, Git, CI/CD pipelines
+\\item IP Addressing, TCP/IP
+\\item Network Troubleshooting
+\\item CCNA Fundamentals
 \\end{itemize}
-\\end{document}`;
+
+\\textbf{Cybersecurity}
+\\begin{itemize}
+\\item Security Fundamentals
+\\item SOC Concepts
+\\item Threat Detection
+\\end{itemize}
+
+\\textbf{IT Operations}
+\\begin{itemize}
+\\item System Troubleshooting
+\\item Microsoft 365
+\\item Technical Support
+\\end{itemize}
+
+\\section{What I Am Looking For}
+An entry-level opportunity where I can contribute to day-to-day technical operations, troubleshoot user and system issues, strengthen my cybersecurity and networking skills, and grow through real-world experience and continuous learning.
+
+\\begin{center}
+\\small \\textbf{Siddhik Reddy Eramma}
+\\small Open to Entry-Level IT \\& Cybersecurity Opportunities
+\\small Hyderabad, India
+\\end{center}`;
